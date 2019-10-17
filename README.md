@@ -1,3 +1,3 @@
 # WebSocketCompression
 
-A description of this package.
+A swift WebSocket compressions library
