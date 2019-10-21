@@ -26,7 +26,7 @@ public class PermessageDeflateDecompressor : ChannelInboundHandler {
     public typealias InboundIn = WebSocketFrame 
     public typealias InboundOut = WebSocketFrame
 
-    init(maxWindowBits: Int32 = 15, noContextTakeOver: Bool = false) {
+    public init(maxWindowBits: Int32 = 15, noContextTakeOver: Bool = false) {
         self.maxWindowBits = maxWindowBits
         self.noContextTakeOver = noContextTakeOver
     }
