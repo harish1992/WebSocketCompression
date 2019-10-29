@@ -22,7 +22,7 @@ import NIOWebSocket
 // writing the new frames back to the channel, to be eventually received by WebSocketConnection.
 
 // Some parts of this code are derived from swift-nio: https://github.com/apple/swift-nio/blob/master/Sources/NIOHTTP1/HTTPResponseCompressor.swift
-public class PermessageDeflateDecompressor : ChannelInboundHandler {
+public class PermessageDeflateDecompressor : ChannelInboundHandler, WebSocketCompressionHandler {
     public typealias InboundIn = WebSocketFrame 
     public typealias InboundOut = WebSocketFrame
 
@@ -98,7 +98,7 @@ public class PermessageDeflateDecompressor : ChannelInboundHandler {
         context.fireChannelRead(self.wrapInboundOut(inflatedFrame))
     }
 
-    func inflatePayload(in buffer: ByteBuffer, allocator: ByteBufferAllocator) -> ByteBuffer {
+    public func inflatePayload(in buffer: ByteBuffer, allocator: ByteBufferAllocator) -> ByteBuffer {
         // Initialize the inflater as per https://www.zlib.net/zlib_how.html
         if noContextTakeOver || streamInitialized == false {
             stream.zalloc = nil

@@ -22,7 +22,7 @@ import CZlib
 // WebSocketConnection, compressing the payload and writing the new frames with a compressed payload onto the channel.
 
 // Some of the code here is borrowed from swift-nio: https://github.com/apple/swift-nio/blob/master/Sources/NIOHTTP1/HTTPResponseCompressor.swift
-public class PermessageDeflateCompressor : ChannelOutboundHandler {
+public class PermessageDeflateCompressor : ChannelOutboundHandler, WebSocketCompressionHandler {
     public typealias OutboundIn = WebSocketFrame 
     public typealias OutboundOut = WebSocketFrame 
 
@@ -90,7 +90,7 @@ public class PermessageDeflateCompressor : ChannelOutboundHandler {
         context.close(mode: mode, promise: promise)
     }
 
-    func deflatePayload(in buffer: ByteBuffer, allocator: ByteBufferAllocator, dropFourTrailingOctets: Bool = false) -> ByteBuffer {
+    public func deflatePayload(in buffer: ByteBuffer, allocator: ByteBufferAllocator, dropFourTrailingOctets: Bool = false) -> ByteBuffer {
         // Initialize the deflater as per https://www.zlib.net/zlib_how.html
         if noContextTakeOver || streamInitialized == false {
             stream.zalloc = nil
